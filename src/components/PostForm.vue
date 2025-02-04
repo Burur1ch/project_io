@@ -4,6 +4,7 @@
       <my-input v-model="post.title" type="text" placeholder=" Naming "/>
       <my-input v-model="post.body" type="text" placeholder=" descr "/>
       <my-button style="margin-top:15px; align-self: end; ;" @click="createPost"> Create </my-button>
+      <my-button @click="close" style="color: red; border: 1px solid red; margin-left: 20px;">Cancel</my-button>
     </form>
 </template>
 
@@ -31,6 +32,9 @@ export default {
       title:'',
       body:''
     }
+    },
+    close(dialogVisible){
+      this.$emit('cancel', dialogVisible)
     }
   }
 }

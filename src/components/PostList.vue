@@ -1,8 +1,10 @@
 <template>
-<div>
-    <post-item :post="post" class="post" v-for="post in posts" :key="post.id" />
+  <div>
+<div v-if="posts.length > 0">
+    <post-item @remove="$emit('remove',post)" :post="post" class="post" v-for="post in posts" :key="post.id" />
 </div>
-    
+<h2 v-else style="color: red;">Sorry something went wrong</h2>
+</div>
 </template>
 
 <script>
