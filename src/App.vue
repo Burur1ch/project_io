@@ -1,62 +1,88 @@
 <template>
-  <div class="app">
-    <h2>Page with posts</h2>
-    <my-button style="margin: 15px 0;" @click="showDialog">
-      Create post
-    </my-button>
-    <new-dialog v-model:show="dialogVisible">
-      <PostForm @create="createPost" @cancel="dialogVisible = false" />
-    </new-dialog>
-
-    <PostList @remove="removePost" :posts="posts" />
+  <div>
+    <div class="container">
+      <input type="text" v-model="threads.name" placeholder="Введите имя">
+      <input type="number" v-model="threads.price"  placeholder="Введите прайс">
+      <button class="btn" v-show="this.threads.name!=='' && this.threads.price !== null" @click="add"> Добавить </button>
+      <div class="item" v-for="item in exp" :key="item.number">
+        <div><strong>Название траты: </strong>{{ item.name }}</div>
+        <div><stong>Стоимость: </stong>{{ item.weight }}$</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import PostForm from "./components/PostForm.vue";
-import PostList from "./components/PostList.vue";
-import MyButton from './components/UI/MyButton.vue';
-import NewDialog from "./components/UI/NewDialog.vue";
-
 export default {
-  components: {
-    PostForm,
-    PostList,
-    NewDialog,
-    MyButton,
-  },
   data() {
     return {
-      posts: [
-        { id: 1, title: "Java", body: "easy" },
-        { id: 2, title: "Python", body: "Medium" },
-        { id: 3, title: "Kotlin", body: "Hard" },
+      exp: [
+        { number: 1, name: "Ведущий", weight: 600 },
+        { number: 2, name: "Фотограф", weight: 400 },
+        { number: 3, name: "Усадьба", weight: 800 },
       ],
-      dialogVisible: false,
+      threads:{
+        name:'', price: null
+      }
     };
   },
   methods: {
-    createPost(post) {
-      this.posts.push(post);
-      this.dialogVisible = false
-    },
-    removePost(post) {
-      this.posts = this.posts.filter((p) => p.id !== post.id);
-    },
-    showDialog(){
-      this.dialogVisible = true
+    add(){
+      this.exp.push({
+        number: this.exp.length +1,
+        name: this.threads.name,
+        weight: this.threads.price
+      })
+      this.threads = { name: "", price: null };
     }
   },
 };
 </script>
 
-<style >
+<style>
+
+input{
+  padding: 15px;
+  width: 400px;
+  height: 50px;
+  border: 2px solid blue;
+  margin: 15px 0;
+  font-size: 20px;
+}
+
+.btn{
+  border:2px solid blue;
+  margin: 10px 0;
+  width: 100px;
+  height: 50px;
+}
+
+.btn:hover{
+  color:red;
+  transform: scale(1.1);
+  font-size: 18px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-.app {
-  padding: 20px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+  padding: 15px;
+  border: 2px solid gray;
+  width: 800px;
+  height: 100px;
 }
 </style>
