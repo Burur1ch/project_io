@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <div class="container">
-      <input type="text" v-model="threads.name" placeholder="Введите имя">
-      <input type="number" v-model="threads.price"  placeholder="Введите прайс">
-      <button class="btn" v-show="this.threads.name!=='' && this.threads.price !== null" @click="add"> Добавить </button>
-      <div class="item" v-for="item in exp" :key="item.number">
-        <div><strong>Название траты: </strong>{{ item.name }}</div>
-        <div><stong>Стоимость: </stong>{{ item.weight }}$</div>
-      </div>
-    </div>
+  <div
+    class="container"
+    :style="{ backgroundColor: smth ? '#b1d3c2' : '#006475' }"
+  >
+    <dark-ligth @changeColor="changeBack"></dark-ligth>
+    <massive-item :exp="exp" />
+    <form-input @create="add" />
   </div>
 </template>
 
 <script>
+import FormInput from "./components/FormInput.vue";
+import MassiveItem from "./components/MassiveItem.vue";
+import DarkLigth from "./components/tests/DarkLigth.vue";
+
 export default {
+  components: { FormInput, MassiveItem, DarkLigth },
   data() {
     return {
       exp: [
@@ -21,68 +23,40 @@ export default {
         { number: 2, name: "Фотограф", weight: 400 },
         { number: 3, name: "Усадьба", weight: 800 },
       ],
-      threads:{
-        name:'', price: null
-      }
+      storage: "",
+      smth: false,
     };
   },
   methods: {
-    add(){
-      this.exp.push({
-        number: this.exp.length +1,
-        name: this.threads.name,
-        weight: this.threads.price
-      })
-      this.threads = { name: "", price: null };
-    }
+    add(newExpense) {
+      this.exp.push(newExpense);
+    },
+    getname(output) {
+      this.storage = output;
+    },
+    changeBack(isOn) {
+      this.smth = isOn;
+    },
   },
 };
 </script>
 
-<style>
-
-input{
-  padding: 15px;
-  width: 400px;
-  height: 50px;
-  border: 2px solid blue;
-  margin: 15px 0;
-  font-size: 20px;
-}
-
-.btn{
-  border:2px solid blue;
-  margin: 10px 0;
-  width: 100px;
-  height: 50px;
-}
-
-.btn:hover{
-  color:red;
-  transform: scale(1.1);
-  font-size: 18px;
-}
-
+<style >
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+
+
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-}
-.item {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  font-size: 20px;
-  padding: 15px;
-  border: 2px solid gray;
-  width: 800px;
-  height: 100px;
+  gap: 20px;
+  padding: 30px;
+  background: #006475;
+  min-height: 100vh;
 }
 </style>
