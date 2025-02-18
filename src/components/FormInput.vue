@@ -10,18 +10,20 @@
       v-model="threads.price" 
       placeholder="Введите стоимость" 
     />
-    <button
+    <my-button
       class="btn"
       :disabled="!isValid"
       @click="add"
     >
-      Добавить
-    </button>
+      ➕ Добавить
+    </my-button>
   </div>
 </template>
 
 <script>
+import MyButton from './UI/MyButton.vue';
 export default {
+  components: { MyButton },
   data() {
     return {
       threads: {
@@ -34,7 +36,7 @@ export default {
     isValid() {
       return this.threads.name.trim() !== "" && this.threads.price > 0;
     },
-  },
+  },  
   methods: {
     add() {
       if (!this.isValid) return;
@@ -57,44 +59,42 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 20px;
-  background: #0e9797;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(226, 168, 7, 0.1);
+  gap: 20px;
+  padding: 25px;
+  background: linear-gradient(135deg, #0e9797, #007bff);
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
 }
 
 input {
-  
   padding: 12px;
   width: 450px;
   border: 2px solid #6cbed3;
   border-radius: 8px;
   font-size: 16px;
   outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input:focus {
-  border-color: #0056b3;
-}
-
-.btn {
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #0056b3;
+  border-color: #ffc107;
+  box-shadow: 0px 4px 8px rgba(255, 193, 7, 0.25);
 }
 
 .btn:disabled {
-  background: #cccccc;
+  background: #ccc;
   cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>
